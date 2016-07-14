@@ -31,6 +31,7 @@ public class Reader {
 		String title = "";
         String link = "";
         String desc = "";
+        String pDate = "";
 		try {
 			uc = url.openConnection();
 			uc.addRequestProperty("User-Agent", 
@@ -44,13 +45,14 @@ public class Reader {
 				title = title + entry.getTitle();
 				link = link + entry.getLink();
 				desc = desc + entry.getDescription();
-
+				pDate = pDate + entry.getPublishedDate();
+                
 			}
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/sample", "root", "PASSWORD");
 			stmt = conn.createStatement();
-			stmt.execute("insert into feed (title,link,description) values(' " + title + "','"+link+"','"+desc+"')");
+			stmt.execute("insert into feed (title,link,description,publishdate) values(' " + title + "','"+link+"','"+desc+"','"+pDate+"')");
 		} finally {
 			if (reader != null)
 				reader.close();
